@@ -5,21 +5,15 @@ let g:loaded_wordcount_vim = 1
 
 " Word count operator
 function! s:wordCountOperator(type)
-  let sel_save = &selection
-  let &selection = "inclusive"
-  try
-    if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
-	    exe "'<,'>Tap wc -w"
-    elseif a:type ==# 'line'
-	    exe "'[,']Tap wc -w"
-    elseif type(a:type) ==# v:t_number
-      exe a:type."Tap wc -w"
-    else
-	    exe "`[,`]Tap wc -w"
-    endif
-  finally
-	  let &selection = sel_save
-  endtry
+  if a:type ==# 'v' || a:type ==# 'V' || a:type ==# ''
+    exe "'<,'>Tap wc -w"
+  elseif a:type ==# 'line'
+    exe "'[,']Tap wc -w"
+  elseif type(a:type) ==# v:t_number
+    exe a:type."Tap wc -w"
+  else
+    exe "`[,`]Tap wc -w"
+  endif
 endfunction
 
 nnoremap <silent> gwc :set operatorfunc=<sid>wordCountOperator<cr>g@
